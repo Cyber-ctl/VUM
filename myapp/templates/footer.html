@@ -1,0 +1,30 @@
+ <footer class="py-4 bg-light mt-auto">
+                    <div class="container-fluid px-4">
+                        <div class="d-flex align-items-center justify-content-between small">
+                            <div class="text-muted">
+                                    <p>Copyright &copy; <span id="currentYear"></span> VUM</p>
+                            </div>
+                            <div>
+                                <a href="#">Privacy Policy</a>
+                                &middot;
+                                <a href="#">Terms &amp; Conditions</a>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get the current year
+            const year = new Date().getFullYear();
+
+            // Find the HTML element by its ID
+            const yearElement = document.getElementById('currentYear');
+
+            // Set the text content of the element to the current year
+            if (yearElement) {
+                yearElement.textContent = year;
+            }
+        });
+
+    </script>

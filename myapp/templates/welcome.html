@@ -1,0 +1,24 @@
+{% extends "index.html" %}
+{%load static %}
+{% block content %}
+ <div class="container py-5">
+    <div class="row align-items-center">
+      <!-- Text Column -->
+      <div class="col-lg-6 mb-4 mb-lg-0 text-center text-lg-start">
+        <h1 class="display-5 fw-semibold">Welcome to <span class="text-warning">VUM</span></h1>
+        <p class="text-muted my-4">
+          "To create a generation of intelligent, prosperous and civilized citizens. To create a healthy, patriotism society as envisioned by Swami Vivekananda." 
+        </p>
+     
+      </div>
+
+      <!-- Book Image -->
+      <div class="col-lg-6 text-center">
+        <img src="{% static 'assets/img/Book_1.jpeg' %}" alt="Life Of The Wild Book" class="img-fluid" style="max-height: 400px;">
+      </div>
+    </div>
+
+    <!-- Carousel Indicators (optional) -->
+ 
+  </div>
+{% endblock %}

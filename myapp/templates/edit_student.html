@@ -1,0 +1,49 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+<div class="container-fluid px-4">
+  <br>
+    <div class="row">
+      <div class="input-group mb-3">
+      </div>
+    </div>
+    <div class="card mb-4">
+          <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+           Modify Details
+          </div>
+    <form method="post" class="form-inline">
+        {% csrf_token %}
+          <div class="row  mt-4">
+            <div class="col-xl-3 col-md-6">
+            <label class="mb-2 ms-4">Name</label>
+           <input type="text" name="name" value="{{ student.name }}" class="form-control ms-4" required>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-xl-3 col-md-6">
+            <label class="mb-2 ms-4">Email</label>
+            <input type="text" name="email" value="{{ student.email }}" class="form-control ms-4" required>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-xl-3 col-md-6">
+                <label class="mb-2 ms-4">Password</label>
+                <input type="text" name="password" value="{{ student.password }}" class="form-control ms-4"required>
+          </div>
+        </div>
+        <br>
+        <div class="row justify-content-md-center">
+            <div class="col-xl-3 col-md-6">
+              <button type="submit" class="btn btn-primary">Update</button>
+              <a href="{% url 'student' %}" class="btn btn-danger">Cancel</a>
+            </div>
+        </div>
+        <br>
+    </form>
+    </div>
+</div>
+{% endblock %}

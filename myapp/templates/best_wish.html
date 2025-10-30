@@ -1,0 +1,207 @@
+{% extends "index.html" %}
+
+{% block content %}
+<div class="container-fluid px-4">
+    <!-- Alert Messages -->
+    {% if messages %}
+    <div class="alert-container">
+        {% for message in messages %}
+        <div class="alert alert-{% if message.tags %}{{ message.tags }}{% else %}info{% endif %} alert-dismissible fade show">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    
+    <br>
+    
+    <!-- Header Section -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">WhatsApp Message Sender</h2>
+        <div class="badge bg-success p-2">
+            <i class="fas fa-users"></i> Total Contacts: {{ Sabhasad|length }}
+        </div>
+    </div>
+    
+    <!-- Filter and Message Composer Section -->
+    <div class="row mb-4">
+        <!-- Filter Card -->
+        <div class="col-xl-6 col-md-6 mb-3 mb-md-0">
+            <div class="card border-success">
+                <div class="card-header bg-success text-white">
+                    <i class="fas fa-filter me-1"></i> Filter Options
+                </div>
+                <div class="card-body">
+                 <form method="GET" action="{% url 'sabhasad_filter' %}">
+                        {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6 mb-2">
+                            <label class="form-label">From</label>
+                            <input type="text" class="form-control" id="from_reg" name="from_reg"  value="{{ from_reg }}" >
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <label class="form-label">To </label>
+                            <input type="text" class="form-control" id="to_reg" name="to_reg" value="{{ to_reg }}" >
+                        </div>
+                    </div>
+                    <button class="btn btn-success mt-2">
+                        <i class="fas fa-filter me-1"></i> Apply Filter
+                    </button>
+                 </form>
+                </div>
+            </div>
+            <div class="col col-md-6 mt-3">
+                <a href="{% url 'Birth_view' %}?filter=today"><input type="button" class="col" value="Birthday"></a>
+                <a href="{% url 'Birth_view' %}?filter=monthly"><input type="button" class="col" value="Monthly"></a>
+            </div>
+        </div>
+        
+        <!-- Message Composer Card -->
+        <div class="col-xl-6 col-md-6">
+            <div class="card border-success">
+                <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                    <span><i class="fas fa-comment me-1"></i> Compose Message</span>
+                    <span id="char-count" class="badge bg-light text-dark">0 characters</span>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="{% url 'store_message' %}">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <textarea id="messageBox" name="messageBox" class="form-control" rows="5" 
+                                      placeholder="Type your message here..." oninput="updateCharCount()"></textarea>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-save me-1"></i> Save Message
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary" onclick="clearMessage()">
+                                <i class="fas fa-eraser me-1"></i> Clear
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Sabhasad List and Actions -->
+    <form method="post"  id="messageForm">
+        {% csrf_token %}
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                <div>
+                    <i class="fas fa-table me-1"></i>Members
+                </div>
+                <div>
+                    <button type="button" class="btn btn-sm btn-light me-2" id="selectAllBtn">
+                        <i class="fas fa-check-square me-1"></i> Select All
+                    </button>
+                    <button type="submit" name="send_bulk" class="btn btn-sm btn-warning">
+                        <i class="fas fa-paper-plane me-1"></i> Bulk Send
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover" id="sabhasadTable">
+                        <thead>
+                            <tr>
+                                <th width="50px">
+                                    <input type="checkbox" id="selectAllCheckbox">
+                                </th>
+                                <th>Sr.no</th>
+                                <th>Reg No</th>
+                                <th>Name</th>
+                                <th>Division</th>
+                                <th>Contact</th>
+                                <th>Reg Date</th>
+                                <th width="100px">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for Sabhasad in Sabhasad %}
+                            <tr>
+                                <td>
+                                    <input class="form-check-input row-checkbox" type="checkbox" 
+                                           name="selected_ids" value="{{ Sabhasad.id }}">
+                                </td>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ Sabhasad.reg_no }}</td>
+                                <td>{{ Sabhasad.name }}</td>
+                                <td>{{ Sabhasad.division }}</td>
+                                <td>{{ Sabhasad.contact_no }}</td>
+                                <td>{{ Sabhasad.reg_date }}</td>
+                                <td>
+                                         <a href="{% url 'send_single_message' Sabhasad.id %}" class="btn btn-sm btn-success">
+                                        <i class="fas fa-paper-plane"></i> Send
+                                   
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="7" class="text-center py-4">No members found.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    // Function to update character count
+    function updateCharCount() {
+        const messageBox = document.getElementById('messageBox');
+        const charCount = document.getElementById('char-count');
+        if (messageBox && charCount) {
+            charCount.textContent = messageBox.value.length + ' characters';
+        }
+    }
+    
+    // Function to clear message
+    function clearMessage() {
+        const messageBox = document.getElementById('messageBox');
+        if (messageBox) {
+            messageBox.value = '';
+            updateCharCount();
+        }
+    }
+    
+    // Select all functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const selectAllCheckbox = document.getElementById('selectAllCheckbox');
+        const selectAllBtn = document.getElementById('selectAllBtn');
+        const rowCheckboxes = document.querySelectorAll('.row-checkbox');
+        
+        if (selectAllCheckbox) {
+            selectAllCheckbox.addEventListener('change', function() {
+                const isChecked = this.checked;
+                rowCheckboxes.forEach(checkbox => {
+                    checkbox.checked = isChecked;
+                });
+            });
+        }
+        
+        if (selectAllBtn) {
+            selectAllBtn.addEventListener('click', function() {
+                const anyUnchecked = Array.from(rowCheckboxes).some(checkbox => !checkbox.checked);
+                const newState = anyUnchecked;
+                
+                rowCheckboxes.forEach(checkbox => {
+                    checkbox.checked = newState;
+                });
+                
+                if (selectAllCheckbox) {
+                    selectAllCheckbox.checked = newState;
+                }
+            });
+        }
+        
+        // Update character count on page load
+        updateCharCount();
+    });
+</script>
+{% endblock %}

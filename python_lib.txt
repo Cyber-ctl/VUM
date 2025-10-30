@@ -1,0 +1,28 @@
+Follow steps to start this application
+To install django
+py -m pip install django
+
+py -m pip install pymysql
+
+py -m pip install cryptography
+
+py -m pip install openpyxl
+
+whatsapp msg send
+py -m pip list
+
+py -m pip install pywhatkit
+
+pip install pandas
+
+py manage.py runserver
+
+py manage.py makemigrations
+
+py manage.py migrate
+
+create super user
+
+py manage.py createsuperuser
+
+need to create database and want to add db details into settings.py

@@ -1,0 +1,102 @@
+{% extends "index.html" %}
+{% load static %}
+{% block content %}
+<div class="container-fluid px-4">
+  <br>
+  <div class="card-body">
+    <div class="container-fluid px-4">
+      <form class="row g-3 justify-content-center" method="get" action="{% url 'fetch_by_id' %}">
+        <div class="col-auto">
+            <input type="text" class="form-control" id="userid2" name="userid2" placeholder="Enter User ID">
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary mb-3">Submit</button>
+        </div>
+    </form>
+    <div class="text-center mt-3">
+    <button onclick="printCard()" class="btn btn-primary">Print ID Card</button>
+    </div>
+    </div>
+  </div>
+  <br>
+<div class="container">
+  <!-- Row to contain the cards -->
+  <div class="row">    
+    <!-- Column for first card -->
+   <div class="col-md-4">
+      <div class="container mt-5" id="id-card">
+        <div class="card" style=" width: 400px;height: 700px;">
+            <div class="card-header" style="padding: 20px; background-color: #eb6e34; font-size: 30px; text-align: center;">
+                <h3><b>विद्यार्थी उत्कर्ष मंडळ, मुंबई</b></h3>
+            </div>
+            <div class="card-body" style="background-color: darksalmon;">
+              <img class="card-img-top rounded-circle" src="{% static '\assets\img\logo.jpeg' %}" alt="Card image" style="width: 150px; height: 150px; margin: 0 auto; display: block;">
+                <div class="text-center" style="margin-top: 30%;">
+                {% if object %}
+                <h4 class="card-title">{{ object.name }}</h4>
+                </div>
+                <p>Reg No    : {{ object.reg_no }}</p>
+                <p>Division  : {{ object.division }}</p>
+                <p>Birthdate : {{ object.dob }}</p>
+                <p>Contact No: {{ object.contact_no }}</p>
+                <p>Address   : {{ object.address }}</p>
+                {% else %}
+                  <p>No object found with the given ID.</p>
+                {% endif %}
+            </div>
+            <div class="card-footer">
+                <p>Footer Information</p>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Column for second card -->
+    <div class="col-md-4">
+      <div class="container mt-5">
+        <div class="card" style=" width: 400px;height: 700px;">
+            <div class="card-header" style=" padding: 20px; background-color: #eb6e34; text-align: center;">
+                <h3><b>विद्यार्थी उत्कर्ष मंडळ, मुंबई</b></h3>
+            </div>
+            <div class="card-body">
+              <img class="card-img-top rounded-circle" src="{% static '\assets\img\logo.jpeg' %}" alt="Card image" style="width: 150px; height: 150px; margin: 0 auto; display: block;">
+                <div class="text-center" style="margin-top: 30%;">
+                {% if object %}
+                <h4 class="card-title">Rules</h4>
+                </div>
+                <p>Reg No    : {{ object.reg_no }}</p>
+                <p>Division  : {{ object.division }}</p>
+                <p>Birthdate : {{ object.dob }}</p>
+                <p>Contact No: {{ object.contact_no }}</p>
+                <p>Address   : {{ object.address }}</p>
+                {% else %}
+                  <p>No object found with the given ID.</p>
+                {% endif %}
+            </div>
+            <div class="card-footer">
+                <i class="fa fa-facebook-official">kk</i>
+                <a href="#" class="fa fa-twitter"></a>
+            </div>
+        </div>
+      </div>
+    </div>
+
+<!-- JavaScript to trigger print -->
+<script>
+    function printCard() {
+        var printContent = document.getElementById('id-card');  // Get the ID card content
+        var printWindow = window.open('', '', 'height=600,width=800');  // Open new window for printing
+        printWindow.document.write('<html><head><title>Print ID Card</title></head><body>');
+        printWindow.document.write(printContent.innerHTML);  // Write the content to the print window
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();  // Close the document for the window
+        printWindow.print();  // Trigger the print dialog
+    }
+</script>
+
+
+  </div> <!-- End of row -->
+</div> <!-- End of container -->
+
+<br><br>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends "index.html" %}
+
+{% block content %}
+<div class="container-fluid px-4"> 
+<br>
+<div class="container">
+    
+</div>
+<div class="card-body">
+  <div class="container-fluid px-4">
+      <div class="card mb-4">
+        <div class="card-header">
+          <i class="fas fa-table me-1"></i>
+          Event Table
+        <a href="" style='font-size:18px; ' class="bi bi-person-plus-fill float-end text-primary"><i class="fa-solid fa-user-plus"></i></a>
+        </div>
+        <div class="card-body">
+          <div class="row mb-1" style="justify-content: center;" >
+            <div class="col col-md-6">
+                <a href="?filter=today"><input type="button" class="col" value="Today"></a>
+                 <a href="?filter=monthly"><input type="button" class="col" value="Monthly"></a>
+            </div>
+          </div>
+          <table id="datatablesSimple">
+            <thead>
+            <tr>
+                <th>Sr.no</th>
+                <th>Reg No</th>
+                <th>Name</th>
+                <th>Date</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for dob in sabhasad_list %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ dob.reg_no }}</td>
+                <td>{{ dob.name }}</td>
+                <td>{{ dob.dob }}</td>
+                <td>
+                  <a href="{% url 'send_single_message' dob.id %}" class="btn btn-sm btn-success">
+                  <i class="fas fa-paper-plane"></i> Send
+                                   
+                </td>
+            </tr>
+                 {% empty %}
+                                        <tr>
+                                            <td colspan="3">No Records found.</td>
+                                        </tr>
+                                            {% endfor %}
+          </table>
+        </div>
+      </div>
+  </div>
+</div>
+      
+</div>
+
+
+{% endblock %}

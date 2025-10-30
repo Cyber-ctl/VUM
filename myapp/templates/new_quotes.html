@@ -1,0 +1,48 @@
+{% extends "index.html" %}
+
+{% block content %}
+<div class="container-fluid px-4"> 
+<br>
+ <div class="container">
+    
+  </div>
+
+      <div class="card mb-4">
+          <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            New Quotes
+          </div>
+          <div class="card-body">
+            <div class="container-fluid px-4">
+                <form  method="post" action="{% url 'quotes_new' %}">
+                  {% csrf_token %}
+                  <div class="row ms-0">
+                      <label for="exampleFormControlTextarea1"class="mb-2">New Quotes</label>
+                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" id="quotes" name="quotes"style="width: 600px;"></textarea>
+                    </div>
+                 
+                  <br>
+                  <div class="row">
+                    <div class="col-xl-3 col-md-6">
+                      <div class="form-group">
+                      <label for="exampleFormControlSelect1" class="mb-2">Select Value</label>
+                      <select class="form-control" id="exampleFormControlSelect1" name="status" style="width: 300px;">
+                        <option value="1">Active</option>
+                        <option value="0" >De-Active</option>
+                      </select>
+                    </div>
+                    </div>
+                  </div>
+                <br>
+                 <div class="form-group">
+                <label for="author">Author</label><br>
+                <input type="text" id="author" name="author" class="form-control" style="width: 300px;">
+            </div>
+            <br>
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+          </div>
+      </div>
+</div>
+{% endblock %}

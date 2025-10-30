@@ -1,0 +1,104 @@
+{% extends "index.html" %}
+
+{% block content %}
+<div class="container-fluid px-4"> 
+<br>
+      <div class="card mb-4">
+          <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Sabhasad Modification
+          </div>
+          <div class="card-body">
+            <div class="container-fluid px-4">
+                <form  method="post">
+                  {% csrf_token %}
+                  <div class="row">
+                    <div class="col-xl-3 col-md-6" >
+                      <input type="text" class="form-control text-center" placeholder="Registration No" id="Reg_no" name="Reg_no" value="{{data.reg_no}}">
+                    </div>
+                    <div class="col-xl-8 col-md-6">
+                    </div>
+                  </div>
+                  <br>
+                   <div class="row">
+                    <div class="col-xl-2 col-md-6" style="justify-content: center;">
+                    <label>Full Name</label> 
+                    </div>
+                    <div class="col-xl-6 col-md-6">
+                      <input type="text" class="form-control" placeholder="Name" id="Name" name="Name" value="{{data.name}}">
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                    <div class="col-xl-2 col-md-6">
+                      <label>Contact No</label>
+                    </div>
+                    <div class="col-xl-3 col-md-6 form-group">
+                      <input type="text" class="form-control" placeholder="Contact No" id="Contact" name="Contact" value="{{data.contact_no}}">   
+                    </div>
+                  </div>
+                <br>
+                  <div class="row">
+                    <div class="col-xl-2 col-md-6">
+                      <label>Select Division</label>
+                    </div>
+                    <div class="col-xl-3 col-md-6 form-group">
+                        <select name="Division" class="form-control" required>
+                          <option value="">----------------------------------</option>
+                          {% for div in div %}
+                              <option value="{{ div.name }}">{{ div.name }}</option>
+                          {% endfor %}
+                        </select>
+                    </div>
+                  </div>
+                <br>
+                  <div class="row">
+                    <div class="col-xl-2 col-md-6">
+                      <label class="">Date of Birth</label>
+                      </div>
+                     <div class="col-xl-3 col-md-6" >
+                      <input type="date" class="form-control" placeholder="Date Of Birth" id="Dob " name="Dob" value="{{ dob_n }}">
+                    </div>
+                  </div>
+                <br>
+                 <div class="row">
+                    <div class="col-xl-2 col-md-6" >
+                      <label>Address</label>
+                    </div>
+                    <div class="col-xl-6 col-md-6" >
+                      <textarea class="form-control" placeholder="Address" id="Address " name="Address">{{data.address}}</textarea>
+                    </div>
+                 </div>
+                 <br>
+                 <div class="row">
+                    <div class="col-xl-2 col-md-6"> 
+                      <label>Registration Date</label>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <input type=date class="form-control" id="Reg_date" name="Reg_date" placeholder="Select date" value="{{ date_reg }}"> 
+                    </div>
+                  </div>
+                <br>
+                   <div class="row">
+                    <div class="col-xl-2 col-md-6"> 
+                      <label>Email Id</label>
+                    </div>
+                    <div class="col-xl-8 col-md-6">
+                      <input type="text" class="form-control" placeholder="Email ID" id="Email_id" name="Email_id" value="{{data.email_id}}">
+                    </div>
+                  </div>
+                <br>
+                <div class="row">
+                    <div class="col-xl-2 col-md-6 mt-2"> 
+                      <button type="submit" class="btn btn-primary" name="stud_reg">Submit</button>
+                    </div>
+                    </form>
+                    <div class="col-xl-2 col-md-6 mb-4">
+                     <a href="{% url 'Sabhasad' %}" class="btn btn-danger mt-2">Cancel</a>
+                    </div>
+                  </div>
+            </div>
+          </div>
+      </div>
+</div>
+{% endblock %}

@@ -1,0 +1,107 @@
+{% extends "index.html" %}
+
+{% block content %}
+  <main>
+                    <div class="container-fluid px-4">
+                        <h1 class="mt-4">Student</h1>
+                        <div class="row">
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card bg-primary text-white mb-4">
+                                    <div class="card-body">Total Student Count</div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                       <p>{{ total_count }}</p>
+                                     </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card bg-warning text-white mb-4">
+                                    <div class="card-body">Warning Card</div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        
+
+                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card bg-success text-white mb-4">
+                                    <div class="card-body">Success Card</div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-white stretched-link" href="#">View Details</a>
+                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card bg-danger text-white mb-4">
+                                    <div class="card-body">Danger Card</div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-white stretched-link" href="#">View Details</a>
+                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                                Student Table
+                                    <a href="{% url 'stud_add' %}" style='font-size:18px; ' class="bi bi-person-plus-fill float-end text-primary"><i class="fa-solid fa-user-plus"></i></a>
+                            </div>
+                                
+                           
+                            <div class="card-body">
+                                <table id="datatablesSimple">
+                                    <thead>
+                                        <tr>
+                                            <th>Sr.no</th>
+                                            <th>Name</th>
+                                            <th>Position</th>
+                                            <th>Office</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for student in stu_data %}
+                                        <tr>
+                                            
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>{{ student.name }}</td>
+                                            <td>{{ student.password }}</td>
+                                            <td>{{ student.email }}</td>
+                                            <td>
+                                                <div class="container">
+                                                     <div class="row justify-content-md-left">
+                                                         <div class="col-auto p-0">
+                                                            <button class="btn">
+                                                                <a href="{% url 'edit_student' student.id %}"><i class="fas fa-edit"></i></a>
+                                                            </button>
+                                                                </div>
+                                                        <div class="col-auto p-0">
+                                                             <form action="{% url 'delete_student' student.id %}" method="post">
+                                                                    {% csrf_token %}
+                                                                    <button type="submit" class="btn" onclick="return confirm('Delete this student?')" style="color: red;" >
+                                                                            <i class="fas fa-trash"></i>                                                    
+                                                                    </button>
+                                                                </form>
+                                                         </div>
+                                                     </div>
+                                                </div>
+                                               
+                                            </td>
+                                               
+                                        </tr>
+                                            {% empty %}
+                                        <tr>
+                                            <td colspan="3">No students found.</td>
+                                        </tr>
+                                            {% endfor %}
+                                       
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+{% endblock %}

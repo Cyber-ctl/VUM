@@ -1,0 +1,57 @@
+{% extends "index.html" %}
+
+{% block content %}
+<div class="container-fluid px-4"> 
+<br>
+      <div class="card mb-4">
+          <div class="card-header">
+                <i class="fas fa-table me-1"></i>
+                  Modify Admin
+         </div>
+          <div class="card-body">
+                          <form action="{% url 'admin_delete' admin.id %}" method="POST">
+                {% csrf_token %}
+                  <button type="submit" class="btn bi bi-person-plus-fill float-end text-primary" onclick="return confirm('Do You want Delete this Admin User?')" data-bs-toggle="modal" data-bs-target="#deleteModal" style="color: red;" >
+                  <i class="fas fa-trash" style="color: red;"></i>                                                    
+                  </button>
+                </form>
+             
+            <div class="container-fluid px-4">
+              <form  method="post" action="">
+                  {% csrf_token %}
+                      <div class="row">
+                      <div class="col-xl-3 col-md-6 ms-0">
+                          <label class="mb-2 ms-4">User Id</label>
+                          <input type="text" name="id" id="id" value="ADM_{{ admin.id }}" class="form-control ms-4" readonly>
+                      </div>
+                    </div>
+                  <br>
+                  <div class="row">
+                      <div class="col-xl-3 col-md-6 ms-2">
+                          <label class="mb-2 ms-4">User Name</label>
+                          <input type="text" name="name" id="name" value="{{ admin.name }}" class="form-control ms-4">
+                      </div>
+                    </div>
+                  <br>
+                    <div class="row">
+                      <div class="col-xl-3 col-md-6 ms-2">
+                          <label class="mb-2 ms-4">Email</label>
+                          <input type="text" name="email" id="email" value="{{ admin.email }}" class="form-control ms-4"required>
+                        </div>
+                    </div>
+                  <br>
+                <div class="row">
+                    <div class="col-xl-3 col-md-6">
+                      <button type="submit" class="btn btn-primary" >Submit</button>
+                    </div>
+                     </form>
+                    <div class="col-xl-3 col-md-6">
+                      <a href="{% url 'Admin_list' %}" class="btn btn-danger mt-2">Cancel</a>
+                    </div>
+                  </div>
+                <br>
+            </div>
+          </div>
+      </div>
+</div>
+{% endblock %}

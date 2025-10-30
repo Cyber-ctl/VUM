@@ -1,0 +1,127 @@
+{% extends "index.html" %}
+
+{% block content %}
+<div class="container-fluid px-4"> 
+<br>
+<div class="container">
+    <div class="row">
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card bg-primary text-white mb-4">
+                                    <div class="card-body">Total Count</div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                       <p>{{ total_count }}</p>
+                                     </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-md-6">
+                                <div class="card bg-success text-white mb-4 me-1">
+                                    <div class="col-xl-4 col-md-3" >
+                                        <button class="btn card-body ">Export Data</button>        
+                                    </div>
+                                    
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <div class="col-xl-2 col-md-3 " >
+                                            <label>Start date</label>
+                                        </div>
+                                        <div class="col-xl-4 col-md-3 " >
+                                            <input type=date class="form-control" id="SD " name="SD">
+                                        </div>&nbsp;&nbsp;&nbsp;
+                                        <div class="col-xl-2 col-md-3 " >
+                                            <label>End date</label>
+                                        </div>
+                                        <div class="col-xl-4 col-md-3" >
+                                            <input type=date class="form-control" placeholder="ED" id="ED" name="ED">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card bg-danger text-white mb-4">
+                                    <div class="card-body">Danger Card</div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-white stretched-link" href="#">View Details</a>
+                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       
+</div>
+<div class="card-body">
+  <div class="container-fluid px-4">
+      <div class="card mb-4">
+        <div class="card-header">
+          <i class="fas fa-table me-1"></i>
+          Student Table
+        <a href="{% url 'Sabhasad_reg' %}" style='font-size:18px; ' class="bi bi-person-plus-fill float-end text-primary"><i class="fa-solid fa-user-plus"></i></a>
+        </div>
+        <div class="card-body">
+          <table id="datatablesSimple" style="white-space: nowrap;">
+            <thead>
+            <tr>
+                                            <th>Sr.no</th>
+                                            <th>Reg No</th>
+                                            <th>Name</th>
+                                            <th>Division</th>
+                                            <th>Contact</th>
+                                            <th>Reg Date</th>
+                                            <th>DOB</th>
+                                            <th>Status</th>
+                                            <th>E-mail</th>
+                                            <th>Address</th>
+                                            <th>Created At</th>
+                                            <th>Modified At</th>
+                                            <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for Sabhasad in Sabhasad %}
+            <tr>  
+                <td>{{ forloop.counter }}</td>
+                <td>{{ Sabhasad.reg_no }}</td>
+                <td>{{ Sabhasad.name }}</td>
+                <td>{{ Sabhasad.division }}</td>
+                <td>{{ Sabhasad.contact_no }}</td>
+                <td>{{ Sabhasad.reg_date }}</td>
+                <td>{{ Sabhasad.dob }}</td>
+                <td>{{ Sabhasad.active }}</td>
+                <td>{{ Sabhasad.email_id }}</td>
+                <td>{{ Sabhasad.address }}</td>
+                <td>{{ Sabhasad.createdat }}</td>
+                <td>{{ Sabhasad.modifiedat }}</td>
+                <td>
+                    <div class="container">
+                        <div class="row justify-content-md-left">
+                            <div class="col-auto p-0">
+                                <button class="btn">
+                                    <a href="{% url 'sabhasad_modify' Sabhasad.id  %}"><i class="fas fa-edit"></i></a>
+                                </button>
+                            </div>
+                            <div class="col-auto p-0">
+                                <form action="{% url 'delete_Sabhasad' Sabhasad.id %}" method="POST">
+                                    {% csrf_token %}
+                                        <button type="submit" class="btn" onclick="return confirm('Do you want to delete this user?')" data-bs-toggle="modal" data-bs-target="#deleteModal" style="color: red;" >
+                                        <i class="fas fa-trash"></i>                                                    
+                                        </button>
+                                    </form>
+                            </div>
+                        </div>
+                   </div>
+                    </td>
+                </tr>
+                {% empty %}
+                    <tr>
+                         <td colspan="3">No Records found.</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+          </table>
+        </div>
+      </div>
+  </div>
+</div>
+      
+</div>
+
+
+{% endblock %}

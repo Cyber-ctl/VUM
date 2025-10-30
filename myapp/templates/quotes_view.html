@@ -1,0 +1,78 @@
+{% extends "index.html" %}
+
+{% block content %}
+<div class="container-fluid px-4"> 
+<br>
+<div class="container">
+    
+</div>
+<div class="card-body">
+  <div class="container-fluid px-4">
+      <div class="card mb-4">
+        <div class="card-header">
+          <i class="fas fa-table me-1"></i>
+          Quotes Table
+        <a href="{% url 'quotes_new' %}" style='font-size:18px; ' class="bi bi-person-plus-fill float-end text-primary"><i class="fa-solid fa-user-plus"></i></a>
+        </div>
+        <div class="card-body">
+          <table id="datatablesSimple">
+            <thead>
+            <tr>
+                                            <th>Sr.no</th>
+                                            <th>Quotes</th>
+                                            <th>Author</th>
+                                            <th>Status</th>
+                                            <th>Created At</th>
+                                            <th>Modified At</th>
+                                            <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for items in items %}
+            <tr>
+                                      
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>{{ items.quotes_a }}</td>
+                                            <td>{{ items.author }}</td>
+                                            <td>{{ items.active }}</td>
+                                            <td>{{ items.createdat }}</td>
+                                            <td>{{ items.modifiedat }}</td>
+                                            <td>
+                                                <div class="container">
+                                                     <div class="row justify-content-md-left">
+                                                         <div class="col-auto p-0">
+                                                            <button class="btn">
+                                                                <a href="{% url 'modify_quotes' items.id %}"><i class="fas fa-edit"></i></a>
+                                                            </button>
+                                                                </div>
+                                                        <div class="col-auto p-0">
+                                                             <form action="{% url 'delete_quotes' items.id %}" method="POST">
+                                                                    {% csrf_token %}
+                                                                    <button type="submit" class="btn" onclick="return confirm('Delete this Quotes?')" data-bs-toggle="modal" data-bs-target="#deleteModal" style="color: red;" >
+                                                                        <i class="fas fa-trash"></i>                                                    
+                                                                    </button>
+                                                                </form>
+                                                         </div>
+                                                     </div>
+                                                </div>
+                                               
+                                            </td>
+                                               
+                                        </tr>
+                                            {% empty %}
+                                        <tr>
+                                            <td colspan="3">No Records found.</td>
+                                        </tr>
+                                            {% endfor %}
+                                       
+                                    </tbody>
+          </table>
+        </div>
+      </div>
+  </div>
+</div>
+      
+</div>
+
+
+{% endblock %}

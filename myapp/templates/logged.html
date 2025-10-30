@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+<title>Vum Logged In</title>
+ {% include 'header.html' %}
+</head> 
+<body>
+<br>
+<br>
+<div class="container">
+    <div class="row justify-content-center ">
+      <div class="col-md-8">
+        <div class="card-group mb-0">
+          <div class="card p-4" style=" border-radius: 15px;">
+          <form method="post">
+            {% csrf_token %}
+            <div class="card-body">   
+            <img src="{% static '\assets\img\images.png' %}" style="height: 120px;  border-radius: 15px; "class="mb-4" alt="Logo" >
+              <br>
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Username" name="namevum" id="namevum">
+              </div>
+              <div class="input-group mb-4">
+                <input type="password" class="form-control" placeholder="Password" name="passvum" id="passvum">
+              </div>
+            <div class="col justify-content-center">
+                  <button type="submit" class="btn btn-primary px-4 text-center">Login</button>
+            </div>
+                <div class="input-group mb-4">
+                {% if messages %}
+                  {% for message in messages %}
+                    <p style="color: red;">{{ message }}</p>
+                  {% endfor %}
+                {% endif %}
+                </div>
+            </div>
+            </form>
+          </div>
+          <hr style="border: 0; width: 10px; height: 350px; background-color: black; ">
+          <div class="card text-white bg-primary py-5 d-md-down-none" style="background-color: #264DFF !important; width: 50%;  border-radius: 15px;">
+              <div class="card-body text-center" >
+              <div>
+                <h1>Quotes</h1>
+                <br><br>
+                {% for quotes in items %}
+                <p>" {{ quotes.quotes_a }} "</p>
+                <br>
+                <p class="justify-content-right">-- {{ quotes.author }} --</p>
+                {% empty %}
+                <p>No active quotes found.</p>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <br>  
+   {% include 'footer.html' %}
+  </body>
+  
+</html>
